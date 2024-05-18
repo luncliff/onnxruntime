@@ -1,0 +1,93 @@
+{
+    "version": 6,
+    "cmakeMinimumRequired": {
+        "major": 3,
+        "minor": 25,
+        "patch": 0
+    },
+    "configurePresets": [
+        {
+            "name": "vcpkg-install",
+            "hidden": true,
+            "toolchainFile": "$env{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake",
+            "cacheVariables": {
+                "VCPKG_TARGET_TRIPLET": "x64-windows"
+            },
+            "environment": {
+                "VCPKG_FEATURE_FLGAS": "manifests"
+            },
+            "debug": {
+                "tryCompile": true,
+                "find": false
+            }
+        },
+        {
+            "name": "cuda-options",
+            "cacheVariables": {
+                "onnxruntime_USE_CUDA": true,
+                "onnxruntime_USE_CUDA_NHWC_OPS": true,
+                "onnxruntime_ENABLE_CUDA_LINE_NUMBER_INFO": true,
+                "onnxruntime_CUDA_MINIMAL": false,
+                "CMAKE_CUDA_ARCHITECTURES": "75",
+                "VCPKG_INSTALL_OPTIONS": "--x-feature=cuda"
+            },
+            "debug": {
+                "tryCompile": true
+            }
+        },
+        {
+            "name": "msvc-static-runtime",
+            "hidden": true,
+            "cacheVariables": {
+                "ONNX_USE_MSVC_STATIC_RUNTIME": true,
+                "protobuf_MSVC_STATIC_RUNTIME": true,
+                "gtest_force_shared_crt": false,
+                "CMAKE_MSVC_RUNTIME_LIBRARY": "MultiThreaded$<$<CONFIG:Debug>:Debug>"
+            }
+        },
+        {
+            "name": "unit-test",
+            "hidden": true,
+            "cacheVariables": {
+                "onnxruntime_BUILD_UNIT_TESTS": false
+            }
+        },
+        {
+            "name": "x64-windows",
+            "inherits": [
+                "msvc-static-runtime",
+                "unit-test"
+            ],
+            "generator": "Visual Studio 17 2022",
+            "architecture": "x64",
+            "binaryDir": "${sourceParentDir}/cmake_build",
+            "installDir": "${sourceParentDir}/install",
+            "cacheVariables": {
+                "onnxruntime_USE_FULL_PROTOBUF": false,
+                "onnxruntime_USE_XNNPACK": true,
+                "onnxruntime_BUILD_SHARED_LIB": true,
+                "CMAKE_CONFIGURATION_TYPES": "Debug;Release"
+            },
+            "debug": {
+                "output": false
+            },
+            "vendor": {
+                "microsoft.com/VisualStudioSettings/CMake/1.0": {
+                    "intelliSenseMode": "windows-msvc-x64"
+                }
+            },
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Windows"
+            }
+        }
+    ],
+    "buildPresets": [
+        {
+            "name": "x64-windows-debug",
+            "configurePreset": "x64-windows",
+            "configuration": "Debug"
+        }
+    ]
+}

@@ -211,8 +211,13 @@
       target_link_libraries(${target} PRIVATE CUDA::cuda_driver)
     endif()
 
-    include(cutlass)
-    target_include_directories(${target} PRIVATE ${cutlass_SOURCE_DIR}/include ${cutlass_SOURCE_DIR}/examples ${cutlass_SOURCE_DIR}/tools/util/include)
+    find_package(NvidiaCutlass)
+    if(NvidiaCutlass_FOUND)
+      target_link_libraries(${target} PRIVATE nvidia::cutlass::cutlass)
+    else()
+      include(cutlass)
+      target_include_directories(${target} PRIVATE ${cutlass_SOURCE_DIR}/include ${cutlass_SOURCE_DIR}/examples ${cutlass_SOURCE_DIR}/tools/util/include)
+    endif()
 
     target_include_directories(${target} PRIVATE ${ONNXRUNTIME_ROOT} ${CMAKE_CURRENT_BINARY_DIR}  ${eigen_INCLUDE_DIRS} ${TVM_INCLUDES}
      PUBLIC ${CUDAToolkit_INCLUDE_DIRS})

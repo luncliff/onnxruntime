@@ -38,6 +38,7 @@ include(CheckLanguage)
 include(CMakeDependentOption)
 include(FetchContent)
 include(CheckFunctionExists)
+include(GNUInstallDirs) # onnxruntime_providers_* require CMAKE_INSTALL_* variables
 
 # TODO: update this once all system adapt c++20
 if(CMAKE_SYSTEM_NAME STREQUAL "Darwin")
@@ -583,7 +584,11 @@ get_filename_component(ORTTRAINING_ROOT "${ORTTRAINING_ROOT}" ABSOLUTE)
 get_filename_component(REPO_ROOT "${REPO_ROOT}" ABSOLUTE)
 set(ONNXRUNTIME_INCLUDE_DIR ${REPO_ROOT}/include/onnxruntime)
 
-include(external/onnxruntime_external_deps.cmake)
+if(DEFINED _VCPKG_INSTALLED_DIR)
+  include(external/onnxruntime_vcpkg_deps.cmake)
+else()
+  include(external/onnxruntime_external_deps.cmake)
+endif()
 
 set(ORT_WARNING_FLAGS)
 if (WIN32)
@@ -714,7 +719,21 @@ if (onnxruntime_USE_CUDA)
   if (onnxruntime_USE_CUDA_NHWC_OPS)
     add_compile_definitions(ENABLE_CUDA_NHWC_OPS)
   endif()
-  enable_language(CUDA)
+  # Give more hints for the generator, with FindCUDAToolkit.cmake
+  if(CMAKE_GENERATOR MATCHES "Visual Studio")
+    set(CMAKE_VS_PLATFORM_TOOLSET_CUDA "${CUDAToolkit_VERSION_MAJOR}.${CUDAToolkit_VERSION_MINOR}")
+    set(CMAKE_VS_PLATFORM_TOOLSET_CUDA_CUSTOM_DIR "${CUDAToolkit_TARGET_DIR}/")
+  endif()
+
+  # Help finding CUDA compiler
+  get_filename_component(CMAKE_CUDA_COMPILER "${CUDAToolkit_NVCC_EXECUTABLE}" ABSOLUTE)
+  check_language(CUDA)
+  enable_language(CUDA) # crashes Visual Studio generator...?
+
+  # Guess the version if unknown from enable_language(CUDA)...
+  if(NOT DEFINED CMAKE_CUDA_COMPILER_VERSION)
+    set(CMAKE_CUDA_COMPILER_VERSION "${CUDAToolkit_VERSION_MAJOR}.${CUDAToolkit_VERSION_MINOR}")
+  endif()
   message( STATUS "CMAKE_CUDA_COMPILER_VERSION: ${CMAKE_CUDA_COMPILER_VERSION}")
 
   if (onnxruntime_DISABLE_CONTRIB_OPS)
