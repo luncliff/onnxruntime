@@ -102,6 +102,13 @@
         }
       ]
     },
+    "test": {
+      "description": "Build ONNXRuntime unit tests",
+      "dependencies": [
+        "benchmark",
+        "gtest"
+      ]
+    },
     "xnnpack": {
       "description": "Build with XNNPack support",
       "dependencies": [
