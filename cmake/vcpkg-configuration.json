@@ -11,9 +11,12 @@
             "packages": [
                 "onnx",
                 "xnnpack",
+                "cpuinfo",
+                "pthreadpool",
+                "nsync",
                 "nvidia-cutlass"
             ],
-            "baseline": "979e33f327be59551ac8051955f0d86fdbe5bd3e"
+            "baseline": "50665ccae0cba482db7ceaabdbb7f3bc1e7744f1"
         }
     ]
 }

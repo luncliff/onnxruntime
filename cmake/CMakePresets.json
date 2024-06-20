@@ -11,6 +11,7 @@
             "hidden": true,
             "toolchainFile": "$env{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake",
             "environment": {
+                "VCPKG_INSTALL_OPTIONS": "--x-feature=test;--x-feature=xnnpack",
                 "VCPKG_FEATURE_FLGAS": "manifests"
             },
             "debug": {
@@ -95,7 +96,9 @@
             "cacheVariables": {
                 "CMAKE_OSX_ARCHITECTURES": "x86_64",
                 "onnxruntime_BUILD_SHARED_LIB": true,
-                "onnxruntime_USE_COREML": true,
+                "onnxruntime_USE_XNNPACK": false,
+                "onnxruntime_DISABLE_CONTRIB_OPS": true,
+                "onnxruntime_USE_COREML": false,
                 "onnxruntime_BUILD_OBJC": true,
                 "onnxruntime_BUILD_APPLE_FRAMEWORK": true,
                 "CMAKE_CONFIGURATION_TYPES": "Debug;Release"

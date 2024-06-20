@@ -6,6 +6,12 @@
   "license": "MIT",
   "dependencies": [
     {
+      "name": "abseil",
+      "features": [
+        "cxx17"
+      ]
+    },
+    {
       "name": "boost-config",
       "version>=": "1.82.0"
     },
@@ -18,13 +24,17 @@
     "date",
     "dlpack",
     "eigen3",
-    "flatbuffers",
     {
       "name": "flatbuffers",
       "host": true
     },
+    "flatbuffers",
     "ms-gsl",
     "nlohmann-json",
+    {
+      "name": "nsync",
+      "platform": "!windows"
+    },
     {
       "name": "nsync",
       "platform": "!windows",
@@ -32,17 +42,17 @@
     },
     {
       "name": "onnx",
-      "version>=": "1.16.0"
+      "version>=": "1.15.0"
     },
     "optional-lite",
     {
       "name": "protobuf",
-      "version>=": "v21.12"
+      "version>=": "3.21.12"
     },
     {
       "name": "protobuf",
       "host": true,
-      "version>=": "v21.12"
+      "version>=": "3.21.12"
     },
     "re2",
     "safeint",

@@ -338,6 +338,9 @@ if(onnxruntime_BUILD_APPLE_FRAMEWORK)
 
   # for external libraries we create a symlink to the .a file
   foreach(_LIB ${onnxruntime_EXTERNAL_LIBRARIES})
+    if(NOT TARGET ${_LIB})
+      continue()
+    endif()
     GET_TARGET_PROPERTY(_LIB_TYPE ${_LIB} TYPE)
     if(_LIB_TYPE STREQUAL "STATIC_LIBRARY")
       add_custom_command(TARGET onnxruntime POST_BUILD
