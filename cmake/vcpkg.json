@@ -67,62 +67,11 @@
     "wil"
   ],
   "features": {
-    "cuda": {
-      "description": "Build with CUDA/NCCL support",
-      "dependencies": [
-        "cuda",
-        "cudnn",
-        "nvidia-cutlass"
-      ]
-    },
-    "directml": {
-      "description": "Build with DirectML support",
-      "supports": "windows",
-      "dependencies": [
-        "directml"
-      ]
-    },
-    "mpi": {
-      "description": "Build with MPI support",
-      "dependencies": [
-        "mpi"
-      ]
-    },
-    "openvino": {
-      "description": "Build with OpenVINO support",
-      "supports": "!(osx | ios | android | emscripten)",
-      "dependencies": [
-        {
-          "name": "openvino",
-          "default-features": false,
-          "features": [
-            "cpu",
-            "gpu",
-            "onnx"
-          ]
-        }
-      ]
-    },
-    "python": {
-      "description": "Enable python buildings",
-      "dependencies": [
-        {
-          "name": "vcpkg-get-python-packages",
-          "host": true
-        }
-      ]
-    },
     "test": {
       "description": "Build ONNXRuntime unit tests",
       "dependencies": [
         "benchmark",
         "gtest"
-      ]
-    },
-    "xnnpack": {
-      "description": "Build with XNNPack support",
-      "dependencies": [
-        "xnnpack"
       ]
     }
   }

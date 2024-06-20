@@ -11,26 +11,11 @@
             "hidden": true,
             "toolchainFile": "$env{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake",
             "environment": {
-                "VCPKG_INSTALL_OPTIONS": "--x-feature=test;--x-feature=xnnpack",
                 "VCPKG_FEATURE_FLGAS": "manifests"
             },
             "debug": {
                 "tryCompile": true,
                 "find": false
-            }
-        },
-        {
-            "name": "cuda-options",
-            "cacheVariables": {
-                "onnxruntime_USE_CUDA": true,
-                "onnxruntime_USE_CUDA_NHWC_OPS": true,
-                "onnxruntime_ENABLE_CUDA_LINE_NUMBER_INFO": true,
-                "onnxruntime_CUDA_MINIMAL": false,
-                "CMAKE_CUDA_ARCHITECTURES": "75",
-                "VCPKG_INSTALL_OPTIONS": "--x-feature=cuda"
-            },
-            "debug": {
-                "tryCompile": true
             }
         },
         {
@@ -83,6 +68,20 @@
                 "type": "equals",
                 "lhs": "${hostSystemName}",
                 "rhs": "Windows"
+            }
+        },
+        {
+            "name": "x64-windows-vcpkg",
+            "inherits": [
+                "x64-windows",
+                "vcpkg-install"
+            ],
+            "cacheVariables": {
+                "onnxruntime_USE_XNNPACK": false,
+                "onnxruntime_USE_DML": false,
+                "VCPKG_INSTALL_OPTIONS": "--x-feature=test",
+                "CMAKE_MSVC_RUNTIME_LIBRARY": "MultiThreaded$<$<CONFIG:Debug>:Debug>DLL",
+                "VCPKG_TARGET_TRIPLET": "x64-windows"
             }
         },
         {
@@ -142,6 +141,11 @@
             "configuration": "Debug"
         },
         {
+            "name": "x64-windows-vcpkg-debug",
+            "configurePreset": "x64-windows-vcpkg",
+            "configuration": "Debug"
+        },
+        {
             "name": "x64-osx-debug",
             "configurePreset": "x64-osx",
             "configuration": "Debug"
@@ -172,6 +176,11 @@
                 "noTestsAction": "error",
                 "stopOnFailure": false
             }
+        },
+        {
+            "name": "x64-windows-vcpkg-debug",
+            "inherits": "x64-windows-debug",
+            "configurePreset": "x64-windows-vcpkg"
         },
         {
             "name": "x64-osx-debug",
