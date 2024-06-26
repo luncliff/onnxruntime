@@ -9,12 +9,7 @@
             "repository": "https://github.com/luncliff/vcpkg-registry",
             "kind": "git",
             "packages": [
-                "onnx",
-                "xnnpack",
-                "cpuinfo",
-                "pthreadpool",
-                "nsync",
-                "nvidia-cutlass"
+                "onnx"
             ],
             "baseline": "50665ccae0cba482db7ceaabdbb7f3bc1e7744f1"
         }

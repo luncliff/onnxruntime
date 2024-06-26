@@ -35,8 +35,7 @@
                 "onnxruntime_RUN_ONNX_TESTS": true,
                 "onnxruntime_BUILD_BENCHMARKS": true,
                 "onnxruntime_BUILD_UNIT_TESTS": true,
-                "onnxruntime_GENERATE_TEST_REPORTS": true,
-                "VCPKG_INSTALL_OPTIONS": "--x-feature=test"
+                "onnxruntime_GENERATE_TEST_REPORTS": true
             }
         },
         {
@@ -50,7 +49,6 @@
             "binaryDir": "${sourceParentDir}/cmake_build/x64-windows",
             "installDir": "${sourceParentDir}/install",
             "cacheVariables": {
-                "CMAKE_CXX_FLAGS": "/MP",
                 "onnxruntime_USE_XNNPACK": true,
                 "onnxruntime_USE_DML": true,
                 "onnxruntime_BUILD_SHARED_LIB": true,
@@ -73,15 +71,22 @@
         {
             "name": "x64-windows-vcpkg",
             "inherits": [
-                "x64-windows",
+                "unit-test",
                 "vcpkg-install"
             ],
+            "generator": "Visual Studio 17 2022",
+            "architecture": "x64",
+            "binaryDir": "${sourceParentDir}/cmake_build/x64-windows",
+            "installDir": "${sourceParentDir}/install",
             "cacheVariables": {
+                "onnxruntime_DISABLE_ABSEIL": true,
                 "onnxruntime_USE_XNNPACK": false,
                 "onnxruntime_USE_DML": false,
+                "onnxruntime_BUILD_SHARED_LIB": true,
                 "VCPKG_INSTALL_OPTIONS": "--x-feature=test",
                 "CMAKE_MSVC_RUNTIME_LIBRARY": "MultiThreaded$<$<CONFIG:Debug>:Debug>DLL",
-                "VCPKG_TARGET_TRIPLET": "x64-windows"
+                "VCPKG_TARGET_TRIPLET": "x64-windows",
+                "CMAKE_CONFIGURATION_TYPES": "Debug;Release"
             }
         },
         {
@@ -109,10 +114,17 @@
             }
         },
         {
-            "name": "arm64-osx",
-            "inherits": "x64-osx",
+            "name": "x64-osx-vcpkg",
+            "inherits": [
+                "x64-osx",
+                "vcpkg-install"
+            ],
             "cacheVariables": {
-                "CMAKE_OSX_ARCHITECTURES": "arm64"
+                "onnxruntime_USE_XNNPACK": false,
+                "onnxruntime_BUILD_OBJC": false,
+                "onnxruntime_BUILD_APPLE_FRAMEWORK": false,
+                "VCPKG_INSTALL_OPTIONS": "--x-feature=test",
+                "VCPKG_TARGET_TRIPLET": "x64-osx"
             }
         },
         {
@@ -151,8 +163,8 @@
             "configuration": "Debug"
         },
         {
-            "name": "arm64-osx-debug",
-            "configurePreset": "arm64-osx",
+            "name": "x64-osx-vcpkg-debug",
+            "configurePreset": "x64-osx-vcpkg",
             "configuration": "Debug"
         },
         {
@@ -196,6 +208,11 @@
                 "noTestsAction": "error",
                 "stopOnFailure": false
             }
+        },
+        {
+            "name": "x64-osx-vcpkg-debug",
+            "inherits": "x64-osx-debug",
+            "configurePreset": "x64-osx-vcpkg"
         }
     ]
 }

@@ -53,15 +53,25 @@ if (onnxruntime_ENABLE_CPUINFO)
 endif()
 
 if (NOT WIN32)
-  find_package(nsync CONFIG REQUIRED)
+  find_library(NSYNC_CPP_LIBRARY NAMES nsync_cpp REQUIRED)
+  add_library(nsync_cpp INTERFACE IMPORTED GLOBAL)
+  set_target_properties(nsync_cpp PROPERTIES INTERFACE_LINK_LIBRARIES "${NSYNC_CPP_LIBRARY}")
+  add_library(nsync::nsync_cpp ALIAS nsync_cpp)
   list(APPEND onnxruntime_EXTERNAL_LIBRARIES nsync::nsync_cpp)
 endif()
 
 find_package(Microsoft.GSL CONFIG REQUIRED)
 list(APPEND onnxruntime_EXTERNAL_LIBRARIES Microsoft.GSL::GSL)
+set(GSL_TARGET Microsoft.GSL::GSL) # see onnxruntime_mlas
 
 # ONNX
 find_package(ONNX CONFIG REQUIRED)
+if(TARGET ONNX::onnx AND NOT TARGET onnx)
+  add_library(onnx ALIAS ONNX::onnx)
+endif()
+if(TARGET ONNX::onnx_proto AND NOT TARGET onnx_proto)
+  add_library(onnx_proto ALIAS ONNX::onnx_proto)
+endif()
 list(APPEND onnxruntime_EXTERNAL_LIBRARIES onnx onnx_proto)
 
 find_package(Eigen3 CONFIG REQUIRED)
