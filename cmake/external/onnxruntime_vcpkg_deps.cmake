@@ -2,7 +2,30 @@ message(STATUS "Using Dependencies from vcpkg...")
 
 # ABSL should be included before protobuf because protobuf may use absl
 find_package(absl CONFIG REQUIRED)
-list(APPEND onnxruntime_EXTERNAL_LIBRARIES absl::base)
+list(APPEND ABSEIL_LIBS
+  absl::base
+  absl::city
+  absl::core_headers
+  absl::fixed_array
+  absl::flags
+  absl::flat_hash_map
+  absl::flat_hash_set
+  absl::hash
+  absl::inlined_vector
+  absl::low_level_hash
+  absl::node_hash_map
+  absl::node_hash_set
+  absl::optional
+  absl::raw_hash_set
+  absl::raw_logging_internal
+  absl::span
+  absl::str_format
+  absl::strings
+  absl::synchronization
+  absl::throw_delegate
+  absl::time
+)
+list(APPEND onnxruntime_EXTERNAL_LIBRARIES ${ABSEIL_LIBS})
 
 find_package(re2 CONFIG REQUIRED) # re2::re2
 list(APPEND onnxruntime_EXTERNAL_LIBRARIES re2::re2)

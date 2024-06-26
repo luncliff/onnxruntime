@@ -79,7 +79,7 @@
             "binaryDir": "${sourceParentDir}/cmake_build/x64-windows",
             "installDir": "${sourceParentDir}/install",
             "cacheVariables": {
-                "onnxruntime_DISABLE_ABSEIL": true,
+                "onnxruntime_DISABLE_ABSEIL": false,
                 "onnxruntime_USE_XNNPACK": false,
                 "onnxruntime_USE_DML": false,
                 "onnxruntime_BUILD_SHARED_LIB": true,
@@ -120,6 +120,7 @@
                 "vcpkg-install"
             ],
             "cacheVariables": {
+                "onnxruntime_DISABLE_ABSEIL": true,
                 "onnxruntime_USE_XNNPACK": false,
                 "onnxruntime_BUILD_OBJC": false,
                 "onnxruntime_BUILD_APPLE_FRAMEWORK": false,
