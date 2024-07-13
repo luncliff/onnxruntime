@@ -222,7 +222,7 @@
       target_link_libraries(${target} PRIVATE nvidia::cutlass::cutlass)
       if(MSVC)
         # CUTLASS_CONSTEXPR_IF_CXX17 must be constexpr. Correct the __cplusplus value with MSVC
-        target_compile_options(${target} PRIVATE $<$<COMPILE_LANGUAGE:CUDA>:"-Xcompiler /Zc:__cplusplus">)
+        target_compile_options(${target} PRIVATE "$<$<COMPILE_LANGUAGE:CUDA>:SHELL:-Xcompiler /Zc:__cplusplus>")
       endif()
     else()
       include(cutlass)
