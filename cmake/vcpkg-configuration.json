@@ -20,6 +20,14 @@
                 "onnx"
             ],
             "baseline": "d8758aed30032ab7b6988fd42faf0657d49a2880"
+        },
+        {
+            "repository": "https://github.com/luncliff/vcpkg-registry",
+            "kind": "git",
+            "packages": [
+                "nvidia-cutlass"
+            ],
+            "baseline": "f87942952daf5866182f3db1c223958c61c6aee6"
         }
     ]
 }

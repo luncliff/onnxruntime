@@ -83,6 +83,15 @@
             }
         },
         {
+            "name": "x64-windows-cuda-vcpkg",
+            "inherits": "x64-windows-vcpkg",
+            "cacheVariables": {
+                "onnxruntime_USE_CUDA": true,
+                "onnxruntime_CUDA_MINIMAL": true,
+                "VCPKG_INSTALL_OPTIONS": "--x-feature=cuda;--x-feature=tests"
+            }
+        },
+        {
             "name": "x64-osx",
             "inherits": [
                 "unit-test"
@@ -131,6 +140,11 @@
         {
             "name": "x64-windows-vcpkg-debug",
             "configurePreset": "x64-windows-vcpkg",
+            "configuration": "Debug"
+        },
+        {
+            "name": "x64-windows-cuda-vcpkg-debug",
+            "configurePreset": "x64-windows-cuda-vcpkg",
             "configuration": "Debug"
         },
         {

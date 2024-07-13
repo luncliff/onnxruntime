@@ -66,6 +66,14 @@
     "wil"
   ],
   "features": {
+    "cuda": {
+      "description": "Build with CUDA support",
+      "dependencies": [
+        "cuda",
+        "cudnn",
+        "nvidia-cutlass"
+      ]
+    },
     "tests": {
       "description": "Build ONNXRuntime unit tests",
       "dependencies": [
