@@ -116,6 +116,16 @@
             }
         },
         {
+            "name": "x64-linux-cuda-vcpkg",
+            "inherits": "x64-linux-vcpkg",
+            "cacheVariables": {
+                "onnxruntime_USE_CUDA": true,
+                "onnxruntime_CUDA_MINIMAL": false,
+                "onnxruntime_DISABLE_CONTRIB_OPS": true,
+                "VCPKG_INSTALL_OPTIONS": "--x-feature=cuda;--x-feature=tests"
+            }
+        },
+        {
             "name": "x64-osx",
             "inherits": [
                 "unit-test"
@@ -174,6 +184,11 @@
         {
             "name": "x64-linux-vcpkg-debug",
             "configurePreset": "x64-linux-vcpkg",
+            "configuration": "Debug"
+        },
+        {
+            "name": "x64-linux-cuda-vcpkg-debug",
+            "configurePreset": "x64-linux-cuda-vcpkg",
             "configuration": "Debug"
         },
         {
