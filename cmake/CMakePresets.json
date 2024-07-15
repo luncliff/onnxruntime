@@ -92,6 +92,30 @@
             }
         },
         {
+            "name": "x64-linux-vcpkg",
+            "inherits": [
+                "unit-test",
+                "vcpkg-manifest"
+            ],
+            "generator": "Ninja Multi-Config",
+            "binaryDir": "${sourceParentDir}/cmake_build/x64-linux",
+            "installDir": "${sourceParentDir}/cmake_build/out",
+            "cacheVariables": {
+                "onnxruntime_USE_VCPKG": true,
+                "onnxruntime_USE_XNNPACK": false,
+                "onnxruntime_BUILD_SHARED_LIB": true,
+                "CMAKE_CONFIGURATION_TYPES": "Debug;Release",
+                "CMAKE_DEFAULT_BUILD_TYPE": "Debug",
+                "VCPKG_INSTALL_OPTIONS": "--x-feature=tests",
+                "VCPKG_TARGET_TRIPLET": "x64-linux"
+            },
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Linux"
+            }
+        },
+        {
             "name": "x64-osx",
             "inherits": [
                 "unit-test"
@@ -145,6 +169,11 @@
         {
             "name": "x64-windows-cuda-vcpkg-debug",
             "configurePreset": "x64-windows-cuda-vcpkg",
+            "configuration": "Debug"
+        },
+        {
+            "name": "x64-linux-vcpkg-debug",
+            "configurePreset": "x64-linux-vcpkg",
             "configuration": "Debug"
         },
         {
