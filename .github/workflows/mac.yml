@@ -2,13 +2,13 @@ name: Mac_CI
 
 on:
   push:
-    branches:
-    - main
-    - rel-*
+    # branches:
+    # - main
+    # - rel-*
   pull_request:
-    branches:
-    - main
-    - rel-*
+    # branches:
+    # - main
+    # - rel-*
   workflow_dispatch:
 
 concurrency:
