@@ -1,9 +1,9 @@
 name: Windows_CI
 on:
   push:
-    branches:
-      - main
-      - rel-*
+    # branches:
+    #   - main
+    #   - rel-*
   pull_request:
 
 concurrency:
@@ -16,6 +16,7 @@ env:
 
 jobs:
   Windows-CUDA-12:
+    if: ${{ false }}
     runs-on: ["self-hosted", "1ES.Pool=onnxruntime-github-vs2022-mms"]
     steps:
       - uses: actions/checkout@v4
