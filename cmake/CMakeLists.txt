@@ -728,6 +728,13 @@ set(ORT_PROVIDER_FLAGS)
 set(ORT_PROVIDER_CMAKE_FLAGS)
 
 if (onnxruntime_USE_CUDA)
+  # Give more hints for the generator, with FindCUDAToolkit.cmake
+  find_package(CUDAToolkit REQUIRED)
+  if(CMAKE_GENERATOR MATCHES "Visual Studio")
+    set(CMAKE_VS_PLATFORM_TOOLSET_CUDA "${CUDAToolkit_VERSION_MAJOR}.${CUDAToolkit_VERSION_MINOR}")
+    set(CMAKE_VS_PLATFORM_TOOLSET_CUDA_CUSTOM_DIR "${CUDAToolkit_TARGET_DIR}/")
+  endif()
+  get_filename_component(CMAKE_CUDA_COMPILER "${CUDAToolkit_NVCC_EXECUTABLE}" ABSOLUTE)
   enable_language(CUDA)
   message( STATUS "CMAKE_CUDA_COMPILER_VERSION: ${CMAKE_CUDA_COMPILER_VERSION}")
 
