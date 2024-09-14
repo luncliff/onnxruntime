@@ -5,6 +5,7 @@ on:
     branches:
     - main
     - rel-*
+    - support/vcpkg*
   pull_request:
     branches:
     - main
