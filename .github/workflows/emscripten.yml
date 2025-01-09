@@ -12,7 +12,7 @@ jobs:
       - name: "Run apt"
         run: |
           sudo apt update -y
-          sudo apt install -y pkg-config
+          sudo apt install -y python3 pkg-config autoconf automake autoconf-archive
 
       - name: "Run vcpkg(wasm32-emscripten)"
         uses: lukka/run-vcpkg@v11.5
@@ -24,3 +24,18 @@ jobs:
         env:
           VCPKG_INSTALLED_DIR: "${{ github.workspace }}/.build"
           VCPKG_DEFAULT_TRIPLET: "wasm32-emscripten"
+
+      - name: "Run build.py"
+        run: |
+          echo $EMSCRIPTEN_ROOT
+          python3 ./tools/ci_build/build.py \
+            --build_dir ./build \
+            --build --parallel \
+            --build_wasm \
+            --emsdk_version "3.1.74" \
+            --skip_submodule_sync \
+            --skip_tests \
+            --use_vcpkg \
+            --cmake_extra_defines "CMAKE_TOOLCHAIN_FILE:FILEPATH=${VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake" \
+            --cmake_extra_defines "VCPKG_TARGET_TRIPLET=wasm32-emscripten" \
+            --cmake_extra_defines "VCPKG_INSTALLED_DIR:PATH=${{ github.workspace }}/.build"
