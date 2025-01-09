@@ -17,6 +17,10 @@ jobs:
           sudo apt update -y
           sudo apt install -y python3 pkg-config autoconf automake autoconf-archive file
 
+      - uses: lukka/get-cmake@latest
+        with:
+          cmakeVersion: "~3.31.0"
+
       - name: "Run vcpkg(wasm32-emscripten)"
         uses: lukka/run-vcpkg@v11.5
         with:
